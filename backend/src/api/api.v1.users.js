@@ -9,24 +9,25 @@ export default app => {
       const result = await User.find();
       res.status(200).json(result);
     } catch (err) {
-      res.json(err);
+      res.status(500).json(err);
     }
   });
 
   // Get user by id
   app.get(`${baseRoute}/:id`, async (req, res) => {
     const id = req.params.id;
+
     if (id) {
       try {
         const result = await User.findById(id);
         res.status(200).json(result);
       } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
       }
     } else {
-      res.json({
+      res.status(400).json({
         errors: true,
-        message: 'Required data was not provided'
+        message: 'You must provide an user ID in the URL'
       });
     }
   });
@@ -45,10 +46,10 @@ export default app => {
         const result = await User.create(data);
         res.status(200).json(result);
       } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
       }
     } else {
-      res.json({
+      res.status(400).json({
         errors: true,
         message: 'Required data was not provided'
       });
@@ -60,7 +61,7 @@ export default app => {
   app.put(`${baseRoute}/:id`, async (req, res) => {
     const id = req.params.id;
 
-    // Check if required data by the model is set
+    // Check if id and required data by the model is set
     if (id && req.body.firstname) {
       const data = {
         firstname: req.body.firstname,
@@ -69,15 +70,17 @@ export default app => {
       };
 
       try {
+        // Replace an entire user (is'n atomic)
         const result = await User.replaceOne({ _id: id }, data, {
+          // create if not exist
           upsert: true
         });
         res.status(200).json(result);
       } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
       }
     } else {
-      res.json({
+      res.status(400).json({
         errors: true,
         message: 'Required data was not provided'
       });
@@ -104,12 +107,12 @@ export default app => {
         });
         res.status(200).json(result);
       } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
       }
     } else {
-      res.json({
+      res.status(400).json({
         errors: true,
-        message: 'Required data was not provided'
+        message: 'You must provide an user ID in the URL'
       });
     }
   });
@@ -118,11 +121,18 @@ export default app => {
   app.delete(`${baseRoute}/:id`, async (req, res) => {
     const id = req.params.id;
 
-    try {
-      const result = await User.findByIdAndDelete(id);
-      res.status(200).json(result);
-    } catch (err) {
-      res.json(err);
+    if (id) {
+      try {
+        const result = await User.findByIdAndDelete(id);
+        res.status(200).json(result);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(400).json({
+        errors: true,
+        message: 'You must provide an user ID in the URL'
+      });
     }
   });
 };
