@@ -74,7 +74,7 @@ En caso de éxito retornará el usuario creado.
 
 Esta solicitud permite, mediante un id suministrado en la URL, buscar y reemplazar por completo un determinado usuario y en caso de que no exista crearlo.
 
-Tenga en cuenta que el único campo no reemplazable es "\_id". Si desea reemplazar también el \_id deberá eliminar por completo el usuario (DELETE/:id) e insertar uno nuevo (POST).
+_Tenga en cuenta que el único campo no reemplazable es "\_id". Si desea reemplazar también el \_id deberá eliminar por completo el usuario (DELETE/:id) e insertar uno nuevo (POST)._
 
 La url de la solicitud será de la siguiente manera:
 
@@ -151,3 +151,12 @@ Con lo que obtendríamos la siguiente respuesta:
 ```
 
 _Cabe señalar que al igual que sucede con la solicitud Reemplazar cualquier intento de editar directamente el \_id será infructuoso._
+
+### **6. Eliminar un usuario [DELETE/:id]**
+
+Con esta solicitud eliminamos un usuario de la db,
+se debe suministrar el id del usuario a eliminar en la url y la respuesta será el usuario eliminado o null si no existe.
+
+Forma de la solicitud:
+
+    DELETE: http://www.example.com/api/v1/users/:id
