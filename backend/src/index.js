@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import apiV1 from './routes/api.v1';
+import APIv1users from './api/api.v1.users';
 import { connect } from './database';
 
 const app = express();
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
   res.send('<h1>Ready</h1>');
 });
 
-apiV1(app);
+APIv1users(app);
 
 // Middlewares for errors
 app.use(function(req, res, next) {
