@@ -11,13 +11,18 @@ app.set('port', process.env.PORT || 3000);
 
 // Middlewares
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Routes
+APIv1users(app);
+
+/* app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+}); */
+
 app.get('/', (req, res) => {
   res.send('<h1>Ready</h1>');
 });
-
-APIv1users(app);
 
 // Middlewares for errors
 app.use(function(req, res, next) {
