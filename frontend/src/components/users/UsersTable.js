@@ -17,7 +17,11 @@ function UsersTableRows(props) {
 
       {/* Actions */}
       <td>
-        <UsersEdit />
+        <UsersEdit
+          _id={props.user._id}
+          firstname={props.user.firstname}
+          lastname={props.user.lastname}
+        />
         <UsersDelete />
       </td>
     </tr>
