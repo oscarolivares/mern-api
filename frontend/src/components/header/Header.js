@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar /* , NavItem */ } from 'react-materialize';
+import { Navbar } from 'react-materialize';
 
 // Without react-router
 /* export default () => {
@@ -14,7 +14,11 @@ import { Navbar /* , NavItem */ } from 'react-materialize';
 // With react-router
 export default () => {
   return (
-    <Navbar brand={<Link to="/">LOGO</Link>} alignLinks="right">
+    <Navbar
+      brand={<Link to="/">LOGO</Link>}
+      alignLinks="right"
+      className="teal lighten-1"
+    >
       <Link to="/">Home</Link>
       <Link to="/users">User</Link>
     </Navbar>

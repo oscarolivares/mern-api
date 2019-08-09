@@ -1,30 +1,42 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
+import { Button, CardPanel } from 'react-materialize';
 
+import UsersTable from './UsersTable';
+import UsersAdd from './UsersAdd';
+
+/* Main controls to manage users */
+function UsersControls() {
+  let LinkStyle = {
+    margin: '.4rem'
+  };
+
+  return (
+    <div className="section">
+      <Link to="/users/list" style={LinkStyle}>
+        <Button small waves="light" icon="list" tooltip="List" />
+      </Link>
+      <Link to="/users/add" style={LinkStyle}>
+        <Button small waves="light" icon="add" tooltip="Add" />
+      </Link>
+    </div>
+  );
+}
+
+/* Main user view */
 export default ({ match }) => {
   return (
-    <Switch>
-      <Route exact path={match.path} component={UserList} />
-      <Route path={`${match.path}/:id`} component={UserDetail} />
-    </Switch>
+    <div className="container section">
+      <UsersControls />
+
+      {/* User body, swapable by routes */}
+      <CardPanel className="z-depth-3">
+        <Switch>
+          <Route exact path={match.path} component={UsersTable} />
+          <Route path={`${match.path}/list`} component={UsersTable} />
+          <Route path={`${match.path}/add`} component={UsersAdd} />
+        </Switch>
+      </CardPanel>
+    </div>
   );
 };
-
-export function UserList({ match }) {
-  let id = '24';
-  return (
-    <main className="Users">
-      <h1>User List</h1>
-      <Link to={`${match.url}/${id}`}>User detail</Link>
-    </main>
-  );
-}
-
-export function UserDetail({ match }) {
-  return (
-    <main className="UserDetail">
-      <h2>User Detail</h2>
-      <h3>Requested User Id: {match.params.id}</h3>
-    </main>
-  );
-}

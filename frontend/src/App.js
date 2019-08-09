@@ -9,25 +9,25 @@ import Home from './components/home/Home';
 import Users from './components/users/Users';
 import Header from './components/header/Header';
 
-function MainRoutes() {
+function RouteNotFound({ location }) {
+  return <h3>Sorry, the requested url is invalid</h3>;
+}
+
+function Main() {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/users" component={Users} />
-      <Route component={NoMathch} />
+      <Route component={RouteNotFound} />
     </Switch>
   );
-}
-
-function NoMathch({ location }) {
-  return <h3>Sorry, the requested url is invalid</h3>;
 }
 
 function App() {
   return (
     <>
       <Header />
-      <MainRoutes />
+      <Main />
     </>
   );
 }
