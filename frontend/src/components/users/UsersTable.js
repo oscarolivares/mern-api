@@ -35,7 +35,8 @@ class UsersTable extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      users: []
+      users: [],
+      toast: ''
     };
   }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Modal, Button, TextInput, Row, Col } from 'react-materialize';
+import { toast } from 'materialize-css';
+/* import axios from 'axios'; */
 
 const usersAPI = 'http://192.168.0.114:3000/api/v1/users';
 
@@ -67,29 +69,54 @@ export default class UserEdit extends React.Component {
   }
 
   handleSubmit() {
-    console.log(`${usersAPI}/${this.props._id}`);
-    /* fetch(`${usersAPI}/${this.props._id}`, {
-      method: 'PATCH',
-      mode: 'cors',
-      body: {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname
-      },
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }); */
+    const data = {
+      firstname: this.state.firstname,
+      lastname: this.state.lastname
+    };
+
     fetch(`${usersAPI}/${this.props._id}`, {
       method: 'PATCH',
-      body: {
-        firstname: 'hola'
-      }
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(response => {
-        console.log(response);
-      });
+      .then(
+        result => {
+          toast({
+            html:
+              '<i class="material-icons" style="margin-right: .4rem">thumb_up</i> User was updated',
+            classes: 'blue lighten-1'
+          });
+          console.log(result);
+        },
+        error => {
+          toast({
+            html:
+              '<i class="material-icons" style="margin-right: .4rem">thumb_down</i> User was not updated',
+            classes: 'pink accent-2'
+          });
+          console.log(error);
+        }
+      );
   }
+
+  // With axios
+  /* handleSubmit() {
+    axios
+      .patch(`${usersAPI}/${this.props._id}`, {
+        firstname: 'Fred',
+        lastname: 'Flintstone'
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  } */
 
   render() {
     const btnSaveStyle = {

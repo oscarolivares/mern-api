@@ -15,7 +15,7 @@ import { Navbar } from 'react-materialize';
 export default () => {
   return (
     <Navbar
-      brand={<Link to="/">LOGO</Link>}
+      brand={<Link to="/">React Frontend</Link>}
       alignLinks="right"
       className="teal lighten-1"
     >
