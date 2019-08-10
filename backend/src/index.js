@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import APIv1users from './api/api.v1.users';
 import { connect } from './database';
+import morgan from 'morgan';
 
 const app = express();
 connect();
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(morgan('dev'));
 
 // Routes
 APIv1users(app);
@@ -45,7 +47,7 @@ APIv1users(app);
 }); */
 
 app.get('/', (req, res) => {
-  res.send('<h1>Ready</h1>');
+  res.redirect('index.html');
 });
 
 // Middlewares for errors

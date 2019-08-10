@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h1>Static frontend served by server directly</h1>
+    <p>For other methods uncomment in index.js</p>
+    <div class="container">
+      <form id="add-form">
+        <div class="row">
+          <div class="col-6 d-none d-md-block"></div>
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              name="firstname"
+              placeholder="First name"
+              required
+            />
+          </div>
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              name="lastname"
+              placeholder="Last name"
+              required
+            />
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary">ADD</button>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-table-row"></tbody>
+      </table>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.3.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/index.js"></script>
+</html>
