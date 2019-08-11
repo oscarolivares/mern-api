@@ -1,7 +1,9 @@
 import React from 'react';
+import { createBrowserHistory } from 'history';
 import { Modal, Button, TextInput, Row, Col } from 'react-materialize';
 import { toast } from 'materialize-css';
 
+const history = createBrowserHistory();
 const usersAPI = 'http://192.168.0.114:3000/api/v1/users';
 
 class UserAddForm extends React.Component {
@@ -82,6 +84,11 @@ export default class UserAdd extends React.Component {
             classes: 'blue lighten-1'
           });
           console.log(result);
+          const location = {
+            pathname: '/'
+          };
+          history.push(location);
+          history.go(1);
         },
         error => {
           toast({

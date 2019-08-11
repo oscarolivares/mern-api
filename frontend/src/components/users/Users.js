@@ -31,7 +31,10 @@ export default ({ match }) => {
       <CardPanel className="z-depth-3">
         <Switch>
           <Route exact path={match.path} component={UsersTable} />
-          <Route path={`${match.path}/list`} component={UsersTable} />
+          <Route
+            path={`${match.path}/list`}
+            component={props => <UsersTable />}
+          />
           {/* <Route path={`${match.path}/add`} component={UsersAdd} /> */}
         </Switch>
       </CardPanel>
