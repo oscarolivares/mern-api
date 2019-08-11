@@ -90,6 +90,7 @@ export default class UserEdit extends React.Component {
               '<i class="material-icons" style="margin-right: .4rem">thumb_up</i> User was updated',
             classes: 'blue lighten-1'
           });
+          this.props.onEditUser(this.props._id, data);
           console.log(result);
         },
         error => {

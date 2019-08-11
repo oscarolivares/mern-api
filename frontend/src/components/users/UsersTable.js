@@ -21,8 +21,9 @@ function UsersTableRows(props) {
           _id={props.user._id}
           firstname={props.user.firstname}
           lastname={props.user.lastname}
+          onEditUser={props.onEditUser}
         />
-        <UsersDelete />
+        <UsersDelete _id={props.user._id} onDeleteUser={props.onDeleteUser} />
       </td>
     </tr>
   );
@@ -35,9 +36,31 @@ class UsersTable extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      users: [],
-      toast: ''
+      users: []
     };
+
+    this.handleReloadListForDelete = this.handleReloadListForDelete.bind(this);
+    this.handleReloadListForEdit = this.handleReloadListForEdit.bind(this);
+  }
+
+  handleReloadListForDelete(_id) {
+    const newUsersArray = this.state.users.filter(user => user._id !== _id);
+    this.setState({
+      users: newUsersArray
+    });
+  }
+
+  handleReloadListForEdit(_id, data) {
+    const newUsersArray = this.state.users.map(user => {
+      if (user._id === _id) {
+        user.firstname = data.firstname;
+        user.lastname = data.lastname;
+      }
+      return user;
+    });
+    this.setState({
+      users: newUsersArray
+    });
   }
 
   componentDidMount() {
@@ -69,7 +92,14 @@ class UsersTable extends React.Component {
       return <div>Loading...</div>;
     } else {
       rows.push(
-        users.map(user => <UsersTableRows user={user} key={user._id} />)
+        users.map(user => (
+          <UsersTableRows
+            user={user}
+            key={user._id}
+            onDeleteUser={this.handleReloadListForDelete}
+            onEditUser={this.handleReloadListForEdit}
+          />
+        ))
       );
 
       return (

@@ -3,7 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import { Button, CardPanel } from 'react-materialize';
 
 import UsersTable from './UsersTable';
-import UsersAdd from './UsersAdd';
+import UserAdd from './UsersAdd';
 
 /* Main controls to manage users */
 function UsersControls() {
@@ -16,9 +16,7 @@ function UsersControls() {
       <Link to="/users/list" style={LinkStyle}>
         <Button small waves="light" icon="list" tooltip="List" />
       </Link>
-      <Link to="/users/add" style={LinkStyle}>
-        <Button small waves="light" icon="add" tooltip="Add" />
-      </Link>
+      <UserAdd />
     </div>
   );
 }
@@ -34,7 +32,7 @@ export default ({ match }) => {
         <Switch>
           <Route exact path={match.path} component={UsersTable} />
           <Route path={`${match.path}/list`} component={UsersTable} />
-          <Route path={`${match.path}/add`} component={UsersAdd} />
+          {/* <Route path={`${match.path}/add`} component={UsersAdd} /> */}
         </Switch>
       </CardPanel>
     </div>
