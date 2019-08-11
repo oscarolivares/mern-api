@@ -1,9 +1,7 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
 import { Modal, Button, TextInput, Row, Col } from 'react-materialize';
 import { toast } from 'materialize-css';
 
-const history = createBrowserHistory();
 const usersAPI = 'http://192.168.0.114:3000/api/v1/users';
 
 class UserAddForm extends React.Component {
@@ -26,10 +24,18 @@ class UserAddForm extends React.Component {
     return (
       <Row>
         <Col>
-          <TextInput label="First Name" onChange={this.handleFirstNameChange} />
+          <TextInput
+            label="First Name"
+            value={this.props.firstname}
+            onChange={this.handleFirstNameChange}
+          />
         </Col>
         <Col>
-          <TextInput label="Last Name" onChange={this.handleLastNameChange} />
+          <TextInput
+            label="Last Name"
+            value={this.props.lastname}
+            onChange={this.handleLastNameChange}
+          />
         </Col>
       </Row>
     );
@@ -83,12 +89,12 @@ export default class UserAdd extends React.Component {
               '<i class="material-icons" style="margin-right: .4rem">thumb_up</i> User was added',
             classes: 'blue lighten-1'
           });
+          this.props.onAddUser(result);
+          this.setState({
+            firstname: '',
+            lastname: ''
+          });
           console.log(result);
-          const location = {
-            pathname: '/'
-          };
-          history.push(location);
-          history.go(1);
         },
         error => {
           toast({
@@ -102,10 +108,6 @@ export default class UserAdd extends React.Component {
   }
 
   render() {
-    const btnSaveStyle = {
-      marginRight: '.5rem'
-    };
-
     return (
       <Modal
         header="Create a new user"
@@ -114,7 +116,7 @@ export default class UserAdd extends React.Component {
           <Button
             waves="green"
             modal="close"
-            style={btnSaveStyle}
+            style={{ marginRight: '.5rem' }}
             onClick={this.handleSubmit}
           >
             SAVE

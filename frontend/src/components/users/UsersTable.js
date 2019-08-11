@@ -1,8 +1,9 @@
 import React from 'react';
-import { Table } from 'react-materialize';
+import { Table, Preloader } from 'react-materialize';
 
-import UsersEdit from './UsersEdit';
-import UsersDelete from './UsersDelete';
+import UserAdd from './UserAdd';
+import UserEdit from './UserEdit';
+import UserDelete from './UserDelete';
 import './UsersTable.css';
 
 const usersAPI = 'http://192.168.0.114:3000/api/v1/users';
@@ -17,13 +18,13 @@ function UsersTableRows(props) {
 
       {/* Actions */}
       <td>
-        <UsersEdit
+        <UserEdit
           _id={props.user._id}
           firstname={props.user.firstname}
           lastname={props.user.lastname}
           onEditUser={props.onEditUser}
         />
-        <UsersDelete _id={props.user._id} onDeleteUser={props.onDeleteUser} />
+        <UserDelete _id={props.user._id} onDeleteUser={props.onDeleteUser} />
       </td>
     </tr>
   );
@@ -39,12 +40,15 @@ class UsersTable extends React.Component {
       users: []
     };
 
-    this.handleReloadListForDelete = this.handleReloadListForDelete.bind(this);
+    this.handleReloadListForAdd = this.handleReloadListForAdd.bind(this);
     this.handleReloadListForEdit = this.handleReloadListForEdit.bind(this);
+    this.handleReloadListForDelete = this.handleReloadListForDelete.bind(this);
   }
 
-  handleReloadListForDelete(_id) {
-    const newUsersArray = this.state.users.filter(user => user._id !== _id);
+  handleReloadListForAdd(data) {
+    const newUsersArray = this.state.users;
+    newUsersArray.push(data);
+
     this.setState({
       users: newUsersArray
     });
@@ -58,6 +62,13 @@ class UsersTable extends React.Component {
       }
       return user;
     });
+    this.setState({
+      users: newUsersArray
+    });
+  }
+
+  handleReloadListForDelete(_id) {
+    const newUsersArray = this.state.users.filter(user => user._id !== _id);
     this.setState({
       users: newUsersArray
     });
@@ -89,7 +100,11 @@ class UsersTable extends React.Component {
     if (error) {
       return <div>Conexion problem. Please try again later</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <div className="center">
+          <Preloader />
+        </div>
+      );
     } else {
       rows.push(
         users.map(user => (
@@ -103,19 +118,22 @@ class UsersTable extends React.Component {
       );
 
       return (
-        <Table striped centered>
-          <thead>
-            <tr>
-              <th data-field="_id" className="hidden-sm">
-                ID
-              </th>
-              <th data-field="firstname">First Name</th>
-              <th data-field="lastname">Last Name</th>
-              <th data-field="actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
+        <>
+          <UserAdd onAddUser={this.handleReloadListForAdd} />
+          <Table striped centered>
+            <thead>
+              <tr>
+                <th data-field="_id" className="hidden-sm">
+                  ID
+                </th>
+                <th data-field="firstname">First Name</th>
+                <th data-field="lastname">Last Name</th>
+                <th data-field="actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </>
       );
     }
   }
