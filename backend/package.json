@@ -1,0 +1,31 @@
+{
+  "name": "mern-api-backend",
+  "version": "1.0.0",
+  "description": "Backend of an MERN app with API-REST",
+  "main": "index.js",
+  "author": "OSCAR OLIVARES",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "babel src -d dist",
+    "build2": "babel src -d dist --source-maps",
+    "start": "nodemon src/index.js --exec babel-node",
+    "serve": "node dist/index.js",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "eslint": "^6.1.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
+    "rimraf": "^2.6.3"
+  }
+}
